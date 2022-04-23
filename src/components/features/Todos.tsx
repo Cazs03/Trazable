@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TypeTodo, TypeTodoList } from '../../models/TypeTodoList';
-import { addTodo, selectTodoList } from '../../redux/slice/todoListSlice';
+import { addTodo, checkTodo, selectTodoList } from '../../redux/slice/todoListSlice';
 import ButtonAdd from '../commons/ButtonAdd';
 import InputCheckbox from '../commons/InputCheckbox';
 import LabelCombined from '../commons/LabelCombined';
@@ -28,7 +28,7 @@ function renderTodosList(getTodoList: TypeTodoList) {
     <li key={index}>
       <LabelCombined
         description={todo.description}
-        IncludeComponent={<InputCheckbox checked={todo.checked} />}
+        IncludeComponent={<InputCheckbox todo={todo} dispatcher={checkTodo} />}
       />
     </li>
   ));

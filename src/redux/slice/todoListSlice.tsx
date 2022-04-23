@@ -18,10 +18,23 @@ export const todoListSlice = createSlice({
       state.TodoList.push(todo);
       setLocalStorage(state.TodoList);
     },
+    checkTodo: (state, action) => {
+      let index = -1;
+      // state.TodoList[0].checked = true;
+
+      state.TodoList.find((todo, i) => {
+        if (todo.id === action.payload.id) {
+          index = i;
+        }
+      });
+      if (index >= 0) {
+        state.TodoList[index].checked = !state.TodoList[index].checked;
+      }
+    },
   },
 });
 
-export const { addTodo } = todoListSlice.actions;
+export const { addTodo, checkTodo } = todoListSlice.actions;
 
 export const selectTodoList = (state: { TodoList: { TodoList: any } }) => state.TodoList.TodoList;
 
