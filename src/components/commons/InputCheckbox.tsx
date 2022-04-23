@@ -12,14 +12,11 @@ export default function InputCheckbox({ dispatcher, todo }: componentCheckbox) {
   }
 
   return (
-    <>
-      <p>{todo.checked.toString()}</p>
-      <input
-        type="checkbox"
-        onClick={() => dispatch(dispatcher(todo))}
-        onChange={onChangeAction}
-        checked={todo.checked}
-      />
-    </>
+    <input
+      type="checkbox"
+      onClick={() => dispatch(dispatcher(todo))}
+      onChange={onChangeAction}
+      checked={todo.checked}
+    />
   );
 }

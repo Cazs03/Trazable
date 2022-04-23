@@ -4,14 +4,25 @@
 //     height: fit-content;
 // }
 
-html,body{
-    box-sizing: content-box;
-    width: auto;
-    height: 100%;
-    margin: 0px;
+html,
+body {
+  box-sizing: border-box;
+  width: auto;
+  height: 100%;
+  margin: 0px;
 }
-body{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #fcfcfc;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
