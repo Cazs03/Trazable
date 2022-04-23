@@ -4,7 +4,7 @@ export let piesocket: WebSocket = new WebSocket(
 );
 
 export function connectedWebSocket() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve(true);
   });
 }

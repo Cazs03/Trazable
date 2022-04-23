@@ -11,7 +11,7 @@ export default function Login() {
   return (
     <div className="login-container">
       {!isLogged ? <InputPassword password={password} SetPassword={SetPassword} /> : ''}
-      <ButtonSubmit isLogged={isLogged} dispatcher={tryLogin} password={password} />
+      <ButtonSubmit isLogged={isLogged} dispatcher={tryLogin} />
     </div>
   );
 }

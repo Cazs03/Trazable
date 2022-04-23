@@ -19,6 +19,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "immer": "^9.0.12",
     "piesocket-js": "^2.0.1",
     "piesocket-nodejs": "^1.1.0",
     "prettier": "^2.6.2",
@@ -54,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }

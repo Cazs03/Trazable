@@ -1,8 +1,8 @@
 import { TypeTodo, TypeTodoList } from '../models/TypeTodoList';
 import { getLocalStorage } from './localStorage';
 export function getLastIdFromArray(TodoList: TypeTodoList) {
-  if (TodoList.length > 0) {
-    return TodoList.reduce(function (prev, current) {
+  if (getLocalStorage().length > 0) {
+    return getLocalStorage().reduce(function (prev, current) {
       return prev.id > current.id ? prev : current;
     });
   } else {
