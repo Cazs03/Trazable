@@ -1,0 +1,17 @@
+// *{
+//     box-sizing: content-box;
+//     width: fit-content;
+//     height: fit-content;
+// }
+
+html,body{
+    box-sizing: content-box;
+    width: auto;
+    height: 100%;
+    margin: 0px;
+}
+body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
