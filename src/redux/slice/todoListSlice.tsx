@@ -20,8 +20,6 @@ export const todoListSlice = createSlice({
     },
     checkTodo: (state, action) => {
       let index = -1;
-      // state.TodoList[0].checked = true;
-
       state.TodoList.find((todo, i) => {
         if (todo.id === action.payload.id) {
           index = i;
@@ -29,12 +27,17 @@ export const todoListSlice = createSlice({
       });
       if (index >= 0) {
         state.TodoList[index].checked = !state.TodoList[index].checked;
+        setLocalStorage(state.TodoList);
       }
+    },
+    TodoListLocalStorageHasChanged: (state) => {
+      state.TodoList = getLocalStorage();
+      state.TodoList[0].checked = true;
     },
   },
 });
 
-export const { addTodo, checkTodo } = todoListSlice.actions;
+export const { addTodo, checkTodo, TodoListLocalStorageHasChanged } = todoListSlice.actions;
 
 export const selectTodoList = (state: { TodoList: { TodoList: any } }) => state.TodoList.TodoList;
 
