@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { connectedWebSocket, piesocket } from '../../components/constants/WebSockets';
 import { getLastIdFromArray } from '../../utils/getLastIdFromArray';
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
 
@@ -17,6 +18,9 @@ export const todoListSlice = createSlice({
       };
       state.TodoList.push(todo);
       setLocalStorage(state.TodoList);
+      connectedWebSocket().then((success) => {
+        piesocket.send(JSON.stringify({ key: 'pipipi', todo: todo }));
+      });
     },
     checkTodo: (state, action) => {
       let index = -1;

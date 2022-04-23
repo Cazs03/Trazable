@@ -22,30 +22,25 @@
 //   console.log('aa');
 // }
 import { useEffect } from 'react';
+import { connectedWebSocket, piesocket } from '../components/constants/WebSockets';
 
 export default function UseReactQuerySubscription() {
-  //   const queryClient = useQuerylient();
-
   useEffect(() => {
-    const websocket = new WebSocket(
-      'wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self'
-    );
-    websocket.onopen = () => {
-      console.log('connected');
+    // connectPieSocket();
+    piesocket.onopen = () => {
+      connectedWebSocket();
     };
-    websocket.onmessage = (event) => {
-      //   const data = JSON.parse(event.data);
-      if (event.data.pi.include('pipipipi')) {
-        console.log(event.data);
+    connectedWebSocket().then((success) => {
+      if (success) {
+        console.log(success);
+        piesocket.onmessage = (event) => {
+          if (event.data && event.data.includes('pipipi')) {
+            console.log(event.data);
+          }
+        };
       }
-      //   const queryKey = [...data.entity, data.id].filter(Boolean);
-      //   queryClient.invalidateQueries(queryKey);
-    };
-
-    return () => {
-      websocket.close();
-    };
+    });
   }, []);
 
-  return <div></div>;
+  return null;
 }
