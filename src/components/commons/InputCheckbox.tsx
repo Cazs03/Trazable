@@ -5,13 +5,14 @@ type componentCheckbox = { dispatcher: any; todo: TypeTodo };
 export default function InputCheckbox({ dispatcher, todo }: componentCheckbox) {
   const dispatch = useDispatch();
 
+  function onChangeAction(event: any) {
+    console.log(event);
+  }
+
   return (
-    <input
-      type="checkbox"
-      id="cbox1"
-      value="first_checkbox"
-      onClick={() => dispatch(dispatcher(todo))}
-      defaultChecked={todo.checked}
-    />
+    <>
+      <p>{todo.checked.toString()}</p>
+      <input type="checkbox" onClick={() => dispatch(dispatcher(todo))} checked={todo.checked} />
+    </>
   );
 }

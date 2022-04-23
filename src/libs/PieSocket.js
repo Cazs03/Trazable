@@ -36,7 +36,7 @@ export default function UseReactQuerySubscription() {
       if (success) {
         piesocket.onmessage = (event) => {
           if (event.data && event.data.includes('pipipi')) {
-            dispatch(gettingDataFromWebSocket(JSON.parse(event.data).todo));
+            dispatch(gettingDataFromWebSocket(JSON.parse(event.data)));
           }
         };
       }
