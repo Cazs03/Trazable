@@ -7,6 +7,7 @@ export const todoListSlice = createSlice({
   name: 'todo',
   initialState: {
     TodoList: getLocalStorage(),
+    ignoreWebSockets: false,
   },
   reducers: {
     addTodo: (state, action) => {
@@ -17,6 +18,7 @@ export const todoListSlice = createSlice({
         checked: false,
       };
       state.TodoList.push(todo);
+      state.ignoreWebSockets = true;
       setLocalStorage(state.TodoList);
       connectedWebSocket().then((success) => {
         piesocket.send(JSON.stringify({ key: 'pipipi', todo: todo }));
@@ -34,14 +36,17 @@ export const todoListSlice = createSlice({
         setLocalStorage(state.TodoList);
       }
     },
-    TodoListLocalStorageHasChanged: (state) => {
-      state.TodoList = getLocalStorage();
-      state.TodoList[0].checked = true;
+    gettingDataFromWebSocket: (state, action) => {
+      if (!state.ignoreWebSockets) {
+        state.TodoList.push(action.payload);
+      } else {
+        state.ignoreWebSockets = false;
+      }
     },
   },
 });
 
-export const { addTodo, checkTodo, TodoListLocalStorageHasChanged } = todoListSlice.actions;
+export const { addTodo, checkTodo, gettingDataFromWebSocket } = todoListSlice.actions;
 
 export const selectTodoList = (state: { TodoList: { TodoList: any } }) => state.TodoList.TodoList;
 

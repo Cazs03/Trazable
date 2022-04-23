@@ -22,20 +22,21 @@
 //   console.log('aa');
 // }
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { connectedWebSocket, piesocket } from '../components/constants/WebSockets';
+import { gettingDataFromWebSocket } from '../redux/slice/todoListSlice';
 
 export default function UseReactQuerySubscription() {
+  const dispatch = useDispatch();
   useEffect(() => {
-    // connectPieSocket();
     piesocket.onopen = () => {
       connectedWebSocket();
     };
     connectedWebSocket().then((success) => {
       if (success) {
-        console.log(success);
         piesocket.onmessage = (event) => {
           if (event.data && event.data.includes('pipipi')) {
-            console.log(event.data);
+            dispatch(gettingDataFromWebSocket(JSON.parse(event.data).todo));
           }
         };
       }

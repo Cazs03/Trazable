@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import UseReactQuerySubscription from '../../libs/PieSocket';
 import { selectGetLogin } from '../../redux/slice/loginSlice';
 import Login from '../features/Login';
@@ -7,13 +7,6 @@ import Todos from '../features/Todos';
 
 export default function Main() {
   const isLogged: boolean = useSelector(selectGetLogin);
-  const dispatch = useDispatch();
-
-  // useReactQuerySubscription();
-
-  // useEffect(() => {
-
-  // }, []);
 
   return (
     <div>
