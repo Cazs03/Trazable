@@ -14,52 +14,85 @@ export const todoListSlice = createSlice({
       const lastTodoId = getLastIdFromArray(state.TodoList);
       const todo = {
         id: lastTodoId.id + 1,
-        description: action.payload,
+        description: action.payload.description,
         checked: false,
       };
       state.TodoList.push(todo);
       state.ignoreWebSockets = true;
       setLocalStorage(state.TodoList);
-      connectedWebSocket().then(() => {
-        piesocket.send(JSON.stringify({ key: 'pipipi', todo: todo, action: 'addTodo' }));
-      });
+      if (action.payload.active) {
+        connectedWebSocket().then(() => {
+          piesocket.send(JSON.stringify({ key: 'pipipi', todo: todo, action: 'addTodo' }));
+        });
+      } else {
+        window.addEventListener('online', () => {
+          connectedWebSocket().then(() => {
+            piesocket.send(JSON.stringify({ key: 'pipipi', todo: todo, action: 'addTodo' }));
+            window.removeEventListener('online', null);
+          });
+        });
+      }
     },
     checkTodo: (state, action) => {
       const todoParsed = {
-        id: action.payload.id,
-        description: action.payload.description,
-        checked: action.payload.checked,
+        id: action.payload.todo.id,
+        description: action.payload.todo.description,
+        checked: action.payload.todo.checked,
       };
-      const todo = state.TodoList.find((todo) => todo.id === action.payload.id);
+      const todo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
       if (todo) {
         todo.checked = !todo.checked;
         setLocalStorage(state.TodoList);
         state.ignoreWebSockets = true;
-        connectedWebSocket().then(() => {
-          piesocket.send(JSON.stringify({ key: 'pipipi', todo: todoParsed, action: 'checkTodo' }));
-        });
+        if (action.payload.active) {
+          connectedWebSocket().then(() => {
+            connectedWebSocket().then(() => {
+              piesocket.send(
+                JSON.stringify({
+                  key: 'pipipi',
+                  todo: todoParsed,
+                  action: 'checkTodo',
+                })
+              );
+            });
+          });
+        } else {
+          window.addEventListener('online', () => {
+            connectedWebSocket().then(() => {
+              piesocket.send(
+                JSON.stringify({
+                  key: 'pipipi',
+                  todo: todoParsed,
+                  action: 'checkTodo',
+                })
+              );
+              window.removeEventListener('online', null);
+            });
+          });
+        }
       }
     },
     gettingDataFromWebSocket: (state, action) => {
-      // state.TodoList[0].checked = true;
       if (!state.ignoreWebSockets) {
         switch (action.payload.action) {
           case 'addTodo':
-            state.TodoList.push(action.payload.todo);
+            // eslint-disable-next-line no-case-declarations
+            const addTodo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
+            if (!addTodo) {
+              state.TodoList.push(action.payload.todo);
+            }
             break;
           case 'checkTodo':
             // eslint-disable-next-line no-case-declarations
-            const todo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
-            if (todo) {
-              todo.checked = !todo.checked;
-              // setLocalStorage(state.TodoList);
+            const checkTtodo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
+            if (checkTtodo) {
+              checkTtodo.checked = !checkTtodo.checked;
             }
             break;
         }
       } else {
         state.ignoreWebSockets = false;
       }
-      // setLocalStorage(state.TodoList);
     },
   },
 });
