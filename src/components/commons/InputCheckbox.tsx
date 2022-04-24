@@ -11,14 +11,8 @@ export default function InputCheckbox({ dispatcher, todo }: componentCheckbox) {
 
   function onChangeAction() {
     setChecked(!checked);
+    dispatch(dispatcher({ todo: todo, checked: checked, active: active }));
   }
 
-  return (
-    <input
-      type="checkbox"
-      onClick={() => dispatch(dispatcher({ todo: todo, active: active }))}
-      onChange={onChangeAction}
-      checked={todo.checked}
-    />
-  );
+  return <input type="checkbox" onChange={onChangeAction} checked={todo.checked} />;
 }
