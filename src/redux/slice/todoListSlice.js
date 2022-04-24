@@ -37,11 +37,11 @@ export const todoListSlice = createSlice({
       const todoParsed = {
         id: action.payload.todo.id,
         description: action.payload.todo.description,
-        checked: action.payload.todo.checked,
+        checked: action.payload.checked,
       };
       const todo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
       if (todo) {
-        todo.checked = !todo.checked;
+        todo.checked = action.payload.checked;
         setLocalStorage(state.TodoList);
         state.ignoreWebSockets = true;
         if (action.payload.active) {
@@ -86,7 +86,7 @@ export const todoListSlice = createSlice({
             // eslint-disable-next-line no-case-declarations
             const checkTtodo = state.TodoList.find((todo) => todo.id === action.payload.todo.id);
             if (checkTtodo) {
-              checkTtodo.checked = !checkTtodo.checked;
+              checkTtodo.checked = action.payload.todo.checked;
             }
             break;
         }
