@@ -59,5 +59,11 @@
   },
   "devDependencies": {
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "!<rootDir>/src/reportWebVitals.ts",
+      "!<rootDir>/src/index.tsx"
+    ]
   }
 }
