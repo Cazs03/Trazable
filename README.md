@@ -36,3 +36,19 @@ Login se incorpora para mantener el estado del usuario logueado en la APP, meram
 # Concurrencia con los sockets
 
 La manera de comportarse los sockets y en la API proveniente de la web XXXXX. Se implementa de una forma para evitar el spamming y que únicamente se centre en nuestro canal de comunicación. No tiene casi comp
+
+
+# Docker commands
+To build image dev: 
+"dockerbuilddev": "docker build -t trazable:dev .",
+To run image dev: 
+"dockerrundev": "docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true trazable:dev",
+
+> - To build image prod:
+> "dockerbuildprod": "docker build -f Dockerfile.prod -t trazable:prod .",
+> - To runimage prod: 
+> "dockerrunprod": "docker run -it --rm -p 1337:80 trazable:prod"
+
+# Bugs conocidos
+[# Version 18 React Doble render useEffect second argument empty array ](https://github.com/facebook/react/issues/24429)
+#Utilizando nativamente WS de JS no aparecen en el Chrome Developer Tools
