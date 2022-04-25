@@ -68,28 +68,18 @@ test('setLocalStorage', () => {
 });
 
 test('getLastIdFromArray', () => {
-  const mockTodo = {
-    id: 0,
-    description: 'bailar',
-    checked: true,
-  };
-  const lastId = getLastIdFromArray([mockTodo]);
-  expect(getLastIdFromArray([mockTodo]));
-  expect(lastId).toBe(0);
+  const todoGet = getLastIdFromArray();
+  expect(getLastIdFromArray());
+  expect(typeof todoGet).toBe('object');
+  expect(todoGet.id).toBe(0);
 });
 
 test('checkTodoListInLocalStorage', () => {
   const lastId = checkTodoListInLocalStorage(0);
-  console.log(lastId);
   expect(lastId).toBe(undefined);
 });
 
 test('LabelCombined', async () => {
-  // const mockTodo = {
-  //   id: 0,
-  //   description: 'bailar',
-  //   checked: true,
-  // };
   render(
     <Provider store={UserStore}>
       <LabelCombined description={'awesome'} IncludeComponent={null} />

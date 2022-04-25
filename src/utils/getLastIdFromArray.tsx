@@ -1,6 +1,6 @@
-import { TypeTodo, TypeTodoList } from '../models/TypeTodoList';
+import { TypeTodo } from '../models/TypeTodoList';
 import { getLocalStorage } from './localStorage';
-export function getLastIdFromArray(TodoList: TypeTodoList) {
+export function getLastIdFromArray() {
   if (getLocalStorage().length > 0) {
     return getLocalStorage().reduce(function (prev, current) {
       return prev.id > current.id ? prev : current;
