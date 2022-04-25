@@ -1,48 +1,55 @@
-# Getting Started with Create React App
+# Bienvenidos a la prueba de ensayo de un producto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+En el siguiente fichero se tomará punto por punto las **decisiones**, **soluciones** y **debates** generados de la arquitectura a la hora de montar el proyecto.
 
-## Available Scripts
 
-In the project directory, you can run:
+# Estructura del proyecto
+La decisión inicial se basa en seguir un proyecto con createScripts o montar una versión alternativa con babeljs.
+En este punto y bajo mi punto de visión, en ocasiones, creo que es mejor evitar mantener versiones alternativas a montajes de builders. Dejando el mantenimiento en **Facebook**. Obtendremos mayores beneficios a la larga como actualizaciones..
+- Comentando la estructura del proyecto:
+	- Al usar TS y React la complejidad proviene de cuanto escalable va a ser el proyecto, en este caso se usa por dividir de forma muy sencilla el proyecto, en **componentes funcionales** en una carpeta, **características principales** para sus **casos de usos**, **estilos** , **la estore**, **libs de utilidades**
 
-### `npm start`
+## Plugins extras
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para destacar se han añadido paquetes extras en el proyecto como **linters**, **TypesScript**.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Mayores complejidades  encontrados
 
-### `npm test`
+La complejidad del reto se encuentra en el sistema offline y mantener persistencia sin un real DB para evitar problemas de concurrencias.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Soluciones de problemas complejos
+- A la utilización de WS y dado a los requisitos de la prueba, la librería expuesta por la web no es valida para un proyecto montado con las características anteriores. Por ese echo se usa puramente JS para la implementación del WS.
+- Sincroniza con los websockets y limitaciones con redux, al usar este sistema de redux, hay que implementar algún mecanismo de semáforo. Para evitar duplicidades de eventos indeseados.
+- Otra característica reside en el sistema del event listener para el modo offline, es importante recordar remover el listener.
 
-### `npm run build`
+## Comportamientos de ciertos componentes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Se ha decidió crear una serie de componentes comunes, para expandir en caso de necesidad su potencial en el futuro o se pueda extraer a una librería externa debido a que no es quien almacena las acciones sino, que las recibe como callbacks
+Ej:	- **LabelCombined**: acepta como parámetros dos acciones, la incorporación de la descripción y un componente extra. Que se consigue con esta decisión y es que a la hora de escalar el proyecto se puede reorganizar el componente y implementar extras **sin apenas mantenimientos.**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Decisiones de redux
+Existe una store con dos tipos de reducers login, todos
+Para los reducers los eventos todos recoge tanto las acciones de los adds como los checkbox
+Login se incorpora para mantener el estado del usuario logueado en la APP, meramente funcional.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+# Concurrencia con los sockets
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+La manera de comportarse los sockets y en la API proveniente de la web XXXXX. Se implementa de una forma para evitar el spamming y que únicamente se centre en nuestro canal de comunicación. No tiene casi comp
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Docker commands
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> - To build image dev: 
+> "dockerbuilddev": "docker build -t trazable:dev .",
+> - To run image dev: 
+> "dockerrundev": "docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true trazable:dev",
+> - To build image prod:
+> "dockerbuildprod": "docker build -f Dockerfile.prod -t trazable:prod .",
+> - To runimage prod: 
+> "dockerrunprod": "docker run -it --rm -p 1337:80 trazable:prod"
 
-## Learn More
+# Bugs conocidos
+[# Version 18 React Doble render useEffect second argument empty array ](https://github.com/facebook/react/issues/24429)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true sample:dev
+#Utilizando nativamente WS de JS no aparecen en el Chrome Developer Tools
