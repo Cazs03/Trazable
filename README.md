@@ -51,4 +51,5 @@ To run image dev:
 
 # Bugs conocidos
 [# Version 18 React Doble render useEffect second argument empty array ](https://github.com/facebook/react/issues/24429)
+
 #Utilizando nativamente WS de JS no aparecen en el Chrome Developer Tools
