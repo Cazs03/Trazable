@@ -1,0 +1,16 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
+
+input[type='text'] {
+  font-family: inherit;
+  border: 3px solid $gray;
+  padding: 4px;
+  transition: border-color 0.2s;
+}
+
+input[type='text']:focus {
+  border-image: linear-gradient(to right, $primary, $secondary);
+  border-image-slice: 1;
+}
