@@ -39,11 +39,11 @@ La manera de comportarse los sockets y en la API proveniente de la web XXXXX. Se
 
 
 # Docker commands
-To build image dev: 
-"dockerbuilddev": "docker build -t trazable:dev .",
-To run image dev: 
-"dockerrundev": "docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true trazable:dev",
 
+> - To build image dev: 
+> "dockerbuilddev": "docker build -t trazable:dev .",
+> - To run image dev: 
+> "dockerrundev": "docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true trazable:dev",
 > - To build image prod:
 > "dockerbuildprod": "docker build -f Dockerfile.prod -t trazable:prod .",
 > - To runimage prod: 
